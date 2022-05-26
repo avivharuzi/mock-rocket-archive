@@ -1,0 +1,32 @@
+{
+  "name": "Mock Rocket",
+  "description": "Mock HTTP API calls easily",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "homepage_url": "https://github.com/avivharuzi/mock-rocket",
+  "background": {
+    "service_worker": "scripts/background/main.esm.js"
+  },
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "js": ["scripts/content/main.esm.js"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_icon": "images/icon-128x128.png",
+    "default_popup": "pages/popup/index.html"
+  },
+  "icons": {
+    "16": "images/icon-16x16.png",
+    "32": "images/icon-32x32.png",
+    "48": "images/icon-48x48.png",
+    "128": "images/icon-128x128.png"
+  },
+  "devtools_page": "devtools.html",
+  "options_page": "pages/options/index.html",
+  "permissions": ["tabs"],
+  "host_permissions": ["<all_urls>"]
+}
