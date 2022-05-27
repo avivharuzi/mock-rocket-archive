@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { generateUUID } from '../utils';
-import { Mock } from './mock';
+import { Mock, MockMode } from './mock';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +11,14 @@ import { Mock } from './mock';
 export class MocksService {
   private mocksSubject = new BehaviorSubject<Mock[]>([]);
 
+  private mockModeSubject = new BehaviorSubject<MockMode>('list');
+
   get mocks$(): Observable<Mock[]> {
     return this.mocksSubject.asObservable();
+  }
+
+  get mockMode$(): Observable<MockMode> {
+    return this.mockModeSubject.asObservable();
   }
 
   addOne(mock: Mock): void {
@@ -48,6 +54,10 @@ export class MocksService {
     const updatedMocks = mocks.filter((mock) => mock.id !== id);
 
     this.updateMocksSubjectValue(updatedMocks);
+  }
+
+  updateMode(mode: MockMode): void {
+    this.mockModeSubject.next(mode);
   }
 
   private getMocksSubjectValue(): Mock[] {

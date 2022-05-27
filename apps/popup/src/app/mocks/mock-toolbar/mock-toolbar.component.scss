@@ -1,0 +1,9 @@
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-8);
+
+  h1 {
+    cursor: pointer;
+  }
+}
