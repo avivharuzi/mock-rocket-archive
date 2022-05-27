@@ -66,13 +66,15 @@ export class FormValidators {
     const value = control.value;
     let isValid = true;
 
-    try {
-      const parsedValue = JSON.parse(value);
-      if (!parsedValue) {
+    if (value !== '') {
+      try {
+        const parsedValue = JSON.parse(value);
+        if (!parsedValue) {
+          isValid = false;
+        }
+      } catch (error) {
         isValid = false;
       }
-    } catch (error) {
-      isValid = false;
     }
 
     return isValid
