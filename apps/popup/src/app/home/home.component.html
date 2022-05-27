@@ -19,6 +19,7 @@
     <ng-container *ngSwitchCase="'list'">
       <popup-mock-list
         [mocks]="(mocks$ | async) || []"
+        (createMock)="updateMode('new')"
         (deleted)="onDelete($event)"
         (duplicated)="onDuplicate($event)"
         (edited)="onEdit($event)"

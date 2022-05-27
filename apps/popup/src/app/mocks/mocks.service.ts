@@ -33,7 +33,7 @@ export class MocksService {
       id: generateUUID(),
     };
 
-    this.updateMocksSubjectValue([newMock, ...this.getMocksSubjectValue()]);
+    this.updateMocksSubjectValue([...this.getMocksSubjectValue(), newMock]);
   }
 
   update(id: string, updatedMock: Partial<Mock>): void {

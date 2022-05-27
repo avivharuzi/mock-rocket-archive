@@ -28,6 +28,8 @@ export class MockListComponent {
 
   @Output() deleted = new EventEmitter<string>();
 
+  @Output() createMock = new EventEmitter<void>();
+
   onSlideToggleChange(isActive: boolean, mock: Mock): void {
     this.isActiveUpdated.emit({
       isActive,
