@@ -1,18 +1,12 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { CodemirrorModule } from './ui/codemirror/codemirror.module';
+import { HomeModule } from './home/home.module';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    CodemirrorModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-  ],
+  imports: [BrowserModule, BrowserAnimationsModule, HomeModule],
   declarations: [AppComponent],
   bootstrap: [AppComponent],
 })
