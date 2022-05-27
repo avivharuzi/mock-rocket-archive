@@ -6,6 +6,7 @@ export interface Mock {
   delayInMS: number;
   body: string;
   headers: MockHeader[];
+  isActive: boolean;
 }
 
 export interface MockHeader {

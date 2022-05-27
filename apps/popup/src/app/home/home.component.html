@@ -1,1 +1,29 @@
-<p>home works!</p>
+<popup-mock-toolbar></popup-mock-toolbar>
+<div *ngIf="mockMode$ | async as mockMode" class="home-body">
+  <ng-container [ngSwitch]="mockMode">
+    <div *ngSwitchCase="'new'">
+      <popup-mock-form
+        (cancelled)="updateMode('list')"
+        (submitted)="addMock($event)"
+      ></popup-mock-form>
+    </div>
+    <div *ngSwitchCase="'edit'">
+      <ng-container *ngIf="mockEdit$ | async as mockEdit">
+        <popup-mock-form
+          [mock]="mockEdit"
+          (cancelled)="updateMode('list')"
+          (submitted)="updateMock(mockEdit.id, $event)"
+        ></popup-mock-form>
+      </ng-container>
+    </div>
+    <div *ngSwitchCase="'list'">
+      <popup-mock-list
+        [mocks]="(mocks$ | async) || []"
+        (deleted)="onDelete($event)"
+        (duplicated)="onDuplicate($event)"
+        (edited)="onEdit($event)"
+        (isActiveUpdated)="updateIsActive($event)"
+      ></popup-mock-list>
+    </div>
+  </ng-container>
+</div>

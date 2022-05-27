@@ -1,0 +1,21 @@
+<div class="mock-list">
+  <div *ngFor="let mock of mocks" class="mock-item">
+    <mat-slide-toggle
+      [checked]="mock.isActive"
+      (change)="onSlideToggleChange($event.checked, mock)"
+    ></mat-slide-toggle>
+    <div>{{ mock.httpMethod }}</div>
+    <div>{{ mock.url }}</div>
+    <div>{{ mock.statusCode }}</div>
+    <div>{{ mock.delayInMS }}</div>
+    <button type="button" mat-icon-button (click)="duplicated.emit(mock)">
+      <mat-icon>content_copy</mat-icon>
+    </button>
+    <button type="button" mat-icon-button (click)="edited.emit(mock)">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button type="button" mat-icon-button (click)="deleted.emit(mock.id)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>

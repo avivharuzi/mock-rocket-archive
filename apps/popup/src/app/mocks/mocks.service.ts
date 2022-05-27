@@ -13,12 +13,18 @@ export class MocksService {
 
   private mockModeSubject = new BehaviorSubject<MockMode>('list');
 
+  private mockEditSubject = new BehaviorSubject<Mock | null>(null);
+
   get mocks$(): Observable<Mock[]> {
     return this.mocksSubject.asObservable();
   }
 
   get mockMode$(): Observable<MockMode> {
     return this.mockModeSubject.asObservable();
+  }
+
+  get mockEdit$(): Observable<Mock | null> {
+    return this.mockEditSubject.asObservable();
   }
 
   addOne(mock: Mock): void {
@@ -58,6 +64,10 @@ export class MocksService {
 
   updateMode(mode: MockMode): void {
     this.mockModeSubject.next(mode);
+  }
+
+  updateMockEdit(mock: Mock | null): void {
+    this.mockEditSubject.next(mock);
   }
 
   private getMocksSubjectValue(): Mock[] {

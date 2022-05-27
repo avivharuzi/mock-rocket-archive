@@ -40,6 +40,7 @@ export class MockFormComponent implements OnInit {
     ]),
     body: this.formBuilder.control('', [FormValidators.json]),
     headers: this.formBuilder.array([]),
+    isActive: this.formBuilder.control(true),
   });
 
   httpMethods = HTTP_METHODS;
@@ -58,6 +59,7 @@ export class MockFormComponent implements OnInit {
       statusCode: mock.statusCode,
       delayInMS: mock.delayInMS,
       body: mock.body,
+      isActive: mock.isActive,
     });
 
     mock.headers.map((header) => {

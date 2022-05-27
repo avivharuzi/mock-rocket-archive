@@ -1,4 +1,9 @@
-<form class="mock-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+<form
+  class="mock-form"
+  autocomplete="off"
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+>
   <div class="row">
     <popup-form-input
       type="text"
