@@ -61,4 +61,24 @@ export class FormValidators {
         : null;
     };
   }
+
+  static json(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    let isValid = true;
+
+    try {
+      const parsedValue = JSON.parse(value);
+      if (!parsedValue) {
+        isValid = false;
+      }
+    } catch (error) {
+      isValid = false;
+    }
+
+    return isValid
+      ? null
+      : {
+          json: 'JSON value is invalid',
+        };
+  }
 }
