@@ -11,10 +11,6 @@ export abstract class CommonForm<T> implements ControlValueAccessor {
 
   @Input() disabled = false;
 
-  @Input() describe = '';
-
-  @Input() describedby = '';
-
   @Input() value: T | null = null;
 
   constructor(@Self() @Optional() public ngControl?: NgControl) {
@@ -43,7 +39,7 @@ export abstract class CommonForm<T> implements ControlValueAccessor {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: () => void) {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
