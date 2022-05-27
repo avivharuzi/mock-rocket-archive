@@ -1,0 +1,82 @@
+<form class="mock-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <popup-form-input
+      type="text"
+      formControlName="url"
+      label="URL"
+      placeholder="URL"
+    ></popup-form-input>
+  </div>
+  <div class="row-3">
+    <popup-form-autocomplete-input
+      type="text"
+      formControlName="httpMethod"
+      label="HTTP Method"
+      placeholder="HTTP Method"
+      [options]="httpMethods"
+    ></popup-form-autocomplete-input>
+    <popup-form-input
+      type="number"
+      formControlName="statusCode"
+      label="Status Code"
+      placeholder="Status Code"
+    ></popup-form-input>
+    <popup-form-input
+      type="number"
+      formControlName="delayInMS"
+      label="Delay (in ms)"
+      placeholder="Delay (in ms)"
+    ></popup-form-input>
+  </div>
+  <div class="tabs">
+    <mat-tab-group animationDuration="0ms">
+      <mat-tab label="Body">
+        <popup-codemirror formControlName="body"></popup-codemirror>
+      </mat-tab>
+      <mat-tab label="Headers">
+        <div class="headers-container">
+          <div class="headers-action-buttons">
+            <button
+              type="button"
+              color="accent"
+              mat-flat-button
+              (click)="addHeader()"
+            >
+              <mat-icon>add</mat-icon>
+              <span>Add Header</span>
+            </button>
+          </div>
+          <div class="headers" formArrayName="headers">
+            <div
+              *ngFor="let header of headers.controls; let i = index"
+              class="row-key-value"
+              [formGroupName]="i"
+            >
+              <popup-form-input
+                type="text"
+                formControlName="key"
+                label="Key"
+                placeholder="Key"
+              ></popup-form-input>
+
+              <popup-form-input
+                type="text"
+                formControlName="value"
+                label="Value"
+                placeholder="Value"
+              ></popup-form-input>
+
+              <button type="button" mat-icon-button (click)="removeHeader(i)">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <div class="action-buttons">
+    <button type="button" mat-flat-button (click)="onCancel()">Cancel</button>
+    <button type="submit" color="primary" mat-flat-button>Save</button>
+  </div>
+</form>

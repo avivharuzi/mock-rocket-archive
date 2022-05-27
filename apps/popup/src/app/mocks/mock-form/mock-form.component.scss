@@ -1,0 +1,40 @@
+.mock-form {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  height: 100%;
+}
+
+.row-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-16);
+}
+
+.row-key-value {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: var(--space-16);
+}
+
+.headers-container {
+  display: flex;
+  flex-flow: column;
+  gap: var(--space-16);
+}
+
+.headers-action-buttons {
+  mat-icon {
+    margin-right: var(--space-8);
+  }
+}
+
+.headers {
+  height: var(--codemirror-height);
+  overflow: auto;
+}
+
+.action-buttons {
+  display: flex;
+  gap: var(--space-16);
+  justify-content: flex-end;
+}
