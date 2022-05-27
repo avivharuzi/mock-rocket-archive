@@ -1,3 +1,7 @@
 .home-body {
+  box-sizing: content-box;
+  height: var(--home-body-height);
   padding: var(--space-16);
+  overflow-x: hidden;
+  overflow-y: auto;
 }

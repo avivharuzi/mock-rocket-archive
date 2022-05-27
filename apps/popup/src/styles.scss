@@ -24,23 +24,22 @@
   --space-640: 640px;
   --space-768: 768px;
 
+  --popup-width: 800px;
+  --popup-height: 540px;
+  --toolbar-height: 48px;
+  --home-body-height: 484px;
   --codemirror-height: 250px;
 }
 
 html,
 body {
-  width: 800px;
-  height: 100%;
-  min-height: 540px;
+  width: var(--popup-width);
+  height: var(--popup-height);
 }
 
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-}
-
-.mat-tab-body-content {
-  padding-top: var(--space-16);
 }
 
 .CodeMirror {

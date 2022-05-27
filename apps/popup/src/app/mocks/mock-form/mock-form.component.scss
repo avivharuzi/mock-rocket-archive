@@ -20,17 +20,18 @@
   display: flex;
   flex-flow: column;
   gap: var(--space-16);
+  height: var(--codemirror-height);
+}
+
+.headers {
+  height: 100%;
+  overflow: auto;
 }
 
 .headers-action-buttons {
   mat-icon {
     margin-right: var(--space-8);
   }
-}
-
-.headers {
-  height: var(--codemirror-height);
-  overflow: auto;
 }
 
 .action-buttons {

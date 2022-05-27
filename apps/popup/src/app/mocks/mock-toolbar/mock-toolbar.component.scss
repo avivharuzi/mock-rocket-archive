@@ -1,9 +1,10 @@
 mat-toolbar {
   display: flex;
   justify-content: space-between;
+  height: var(--toolbar-height);
   margin-bottom: var(--space-8);
 
-  h1 {
+  h3 {
     cursor: pointer;
   }
 }
