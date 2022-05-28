@@ -5,6 +5,38 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { generateUUID } from '../utils';
 import { Mock, MockMode } from './mock';
 
+const getHost = (): Promise<string | null> => {
+  return new Promise((resolve) => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (!tabs[0]?.id) {
+        return;
+      }
+
+      chrome.tabs.sendMessage(tabs[0].id, { type: 'host' }, (response) => {
+        if (response.host && typeof response.host === 'string') {
+          resolve(response.host);
+        } else {
+          resolve(null);
+        }
+      });
+    });
+  });
+};
+
+const getMocksFromStorage = (host: string): Promise<Mock[]> => {
+  return new Promise((resolve) => {
+    chrome.storage.sync.get([host], (data) => {
+      resolve(data[host] ? JSON.parse(data[host]) : []);
+    });
+  });
+};
+
+const setMocksToStorage = (host: string, mocks: Mock[]): Promise<void> => {
+  return chrome.storage.sync.set({
+    [host]: JSON.stringify(mocks),
+  });
+};
+
 @Injectable({
   providedIn: 'root',
 })
@@ -14,6 +46,8 @@ export class MocksService {
   private mockModeSubject = new BehaviorSubject<MockMode>('list');
 
   private mockEditSubject = new BehaviorSubject<Mock | null>(null);
+
+  private host: string | null = null;
 
   get mocks$(): Observable<Mock[]> {
     return this.mocksSubject.asObservable();
@@ -25,6 +59,21 @@ export class MocksService {
 
   get mockEdit$(): Observable<Mock | null> {
     return this.mockEditSubject.asObservable();
+  }
+
+  async init(): Promise<void> {
+    this.host = await getHost();
+
+    if (this.host) {
+      const mocks = await getMocksFromStorage(this.host);
+      this.updateMocksSubjectValue(mocks);
+    }
+
+    this.mocks$.subscribe((mocks) => {
+      if (this.host) {
+        setMocksToStorage(this.host, mocks);
+      }
+    });
   }
 
   addOne(mock: Mock): void {
