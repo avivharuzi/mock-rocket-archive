@@ -1,0 +1,23 @@
+{
+  "root": "libs/mock-rocket",
+  "sourceRoot": "libs/mock-rocket/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/mock-rocket/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/mock-rocket"],
+      "options": {
+        "jestConfig": "libs/mock-rocket/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

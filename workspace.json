@@ -2,6 +2,7 @@
   "version": 2,
   "projects": {
     "devtools-panel": "apps/devtools-panel",
+    "mock-rocket": "libs/mock-rocket",
     "options": "apps/options",
     "popup": "apps/popup",
     "scripts-background": "apps/scripts/background",
