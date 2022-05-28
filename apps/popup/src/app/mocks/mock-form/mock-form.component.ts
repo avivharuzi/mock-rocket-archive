@@ -100,6 +100,12 @@ export class MockFormComponent implements OnInit {
       return;
     }
 
-    this.submitted.emit(this.form.value);
+    const formValue = this.form.value;
+
+    this.submitted.emit({
+      ...formValue,
+      statusCode: +formValue.statusCode,
+      delayInMS: +formValue.delayInMS,
+    });
   }
 }
