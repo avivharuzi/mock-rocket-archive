@@ -5,6 +5,7 @@
     "options": "apps/options",
     "popup": "apps/popup",
     "scripts-background": "apps/scripts/background",
-    "scripts-content": "apps/scripts/content"
+    "scripts-content": "apps/scripts/content",
+    "scripts-inject": "apps/scripts/inject"
   }
 }
