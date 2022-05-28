@@ -8,10 +8,11 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder } from '@angular/forms';
 
+import { Mock, MockHeader } from '@mock-rocket/mock-rocket';
+
 import { markAllAsDirty } from '../../form-helpers';
 import { FormValidators } from '../../form-validators';
 import { HTTP_METHODS } from '../../http';
-import { Mock, MockHeader } from '../mock';
 
 @Component({
   selector: 'popup-mock-form',

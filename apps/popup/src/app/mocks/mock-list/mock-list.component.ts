@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core';
 
-import { Mock } from '../mock';
+import { Mock } from '@mock-rocket/mock-rocket';
 
 @Component({
   selector: 'popup-mock-list',

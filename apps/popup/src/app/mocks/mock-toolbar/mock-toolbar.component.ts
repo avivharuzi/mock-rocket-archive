@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { MockMode } from '../mock';
+import { MockMode } from '@mock-rocket/mock-rocket';
+
 import { MocksService } from '../mocks.service';
 
 @Component({

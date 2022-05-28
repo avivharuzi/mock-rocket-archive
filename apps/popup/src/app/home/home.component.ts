@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { Mock, MockMode, MocksService } from '../mocks';
+import { Mock, MockMode } from '@mock-rocket/mock-rocket';
+
+import { MocksService } from '../mocks';
 
 @Component({
   selector: 'popup-home',

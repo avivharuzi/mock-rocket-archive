@@ -6,6 +6,7 @@ export interface ChromeExtensionMessage<T> {
 }
 
 export enum ChromeExtensionMessageType {
+  Init = 'init',
   Mocks = 'mocks',
 }
 

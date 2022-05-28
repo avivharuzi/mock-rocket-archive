@@ -2,40 +2,17 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 
+import {
+  ChromeExtensionMessageType,
+  getChromeCurrentTabHost,
+  getChromeCurrentTabID,
+  getMocksFromChromeStorage,
+  Mock,
+  MockMode,
+  setMocksToChromeStorage,
+} from '@mock-rocket/mock-rocket';
+
 import { generateUUID } from '../utils';
-import { Mock, MockMode } from './mock';
-
-const getHost = (): Promise<string | null> => {
-  return new Promise((resolve) => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (!tabs[0]?.id) {
-        return;
-      }
-
-      chrome.tabs.sendMessage(tabs[0].id, { type: 'host' }, (response) => {
-        if (response.host && typeof response.host === 'string') {
-          resolve(response.host);
-        } else {
-          resolve(null);
-        }
-      });
-    });
-  });
-};
-
-const getMocksFromStorage = (host: string): Promise<Mock[]> => {
-  return new Promise((resolve) => {
-    chrome.storage.sync.get([host], (data) => {
-      resolve(data[host] ? JSON.parse(data[host]) : []);
-    });
-  });
-};
-
-const setMocksToStorage = (host: string, mocks: Mock[]): Promise<void> => {
-  return chrome.storage.sync.set({
-    [host]: JSON.stringify(mocks),
-  });
-};
 
 @Injectable({
   providedIn: 'root',
@@ -47,7 +24,11 @@ export class MocksService {
 
   private mockEditSubject = new BehaviorSubject<Mock | null>(null);
 
+  private tabID: number | null = null;
+
   private host: string | null = null;
+
+  private backgroundConnection: chrome.runtime.Port | null = null;
 
   get mocks$(): Observable<Mock[]> {
     return this.mocksSubject.asObservable();
@@ -62,16 +43,32 @@ export class MocksService {
   }
 
   async init(): Promise<void> {
-    this.host = await getHost();
+    // Get Chrome TabID, Host and add connection.
+    this.tabID = await getChromeCurrentTabID();
+    if (this.tabID !== null) {
+      this.host = await getChromeCurrentTabHost(this.tabID);
+      this.backgroundConnection = chrome.runtime.connect({
+        name: `popup@${this.tabID}`,
+      });
+    }
 
+    // Load mocks from chrome storage first.
     if (this.host) {
-      const mocks = await getMocksFromStorage(this.host);
+      const mocks = await getMocksFromChromeStorage(this.host);
       this.updateMocksSubjectValue(mocks);
     }
 
+    // Listen to mocks changes and update chrome storage and let content to know about it.
     this.mocks$.subscribe((mocks) => {
       if (this.host) {
-        setMocksToStorage(this.host, mocks);
+        setMocksToChromeStorage(this.host, mocks).then();
+      }
+
+      if (this.backgroundConnection) {
+        this.backgroundConnection.postMessage({
+          type: ChromeExtensionMessageType.Mocks,
+          data: mocks,
+        });
       }
     });
   }
