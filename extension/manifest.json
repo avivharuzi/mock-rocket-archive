@@ -27,6 +27,6 @@
   },
   "devtools_page": "devtools.html",
   "options_page": "pages/options/index.html",
-  "permissions": ["tabs"],
+  "permissions": ["storage", "tabs"],
   "host_permissions": ["<all_urls>"]
 }
